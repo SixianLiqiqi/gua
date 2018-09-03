@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        div{
+            width: 300px;
+            height: 300px;
+        }
+        canvas{
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <div id="oDiv">
+        <canvas width="300px" height="300px" id="myCanvas"></canvas>
+    </div>
+        
+    <script>
+        var imgs = ['./1.jpg', './2.jpg'];
+        var num = Math.floor(Math.random() * 2);
+        var a = imgs[num];
+        console.log(a);
+        oDiv.style.background = 'url(' + a + ')';
+        console.log('url(' + a + ')');
+
+        var canvas = document.getElementById("myCanvas");
+        var ctx = canvas.getContext("2d");
+
+        ctx.fillStyle = "silver";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+        var flag = false;
+        canvas.onmousedown = function () {
+            flag = true;
+            // console.log(1);
+        };
+        canvas.onmouseup = function () {
+            flag = false;
+            ctx.globalCompositeOperation = 'source-over';
+            // console.log(2);
+        }
+        canvas.onmousemove = function(e) {
+            // console.log(3);
+            ctx.globalCompositeOperation = "destination-out";
+            if(flag) {
+                
+                ctx.beginPath();
+                var x = e.clientX - canvas.offsetLeft;
+                var y = e.clientY - canvas.offsetTop;
+                ctx.arc(x, y, 16, 0, Math.PI*2, 0);
+                ctx.fill();
+            }
+        };
+
+
+    </script>
+</body>
+</html>
